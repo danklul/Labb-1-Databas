@@ -1,0 +1,499 @@
+—————————LABB 1, Daniel Ekroth—————————
+
+Den här labben är baserad på en av världens esport turnering med den största prispotten, den heter The International för spelet Dota 2. Den har varit 8 år i rad sen spelet releasades. Jag har gjort en Databas baserat på The International 2018 och har med alla spelarna som deltog, alla lag, matcherna de spelade och hur mycket pengar lagen tjänade. 
+
+-- Länk till mitt ER-Diagram finns i botten.
+
+CREATE DATABASE TheInternational2018;
+
+CREATE TABLE country(
+countryId INT NOT NULL AUTO_INCREMENT,
+countryName VARCHAR(50),
+
+PRIMARY KEY (countryId)
+);
+
+CREATE TABLE team(
+  teamId INT NOT NULL AUTO_INCREMENT,
+  teamName VARCHAR(50),
+  teamPlacement VARCHAR(50),
+  teamMoneyWon VARCHAR(50),
+
+  PRIMARY KEY (teamId)
+);
+
+CREATE TABLE player(
+  playerId INT NOT NULL AUTO_INCREMENT,
+  playerName VARCHAR(50),
+  playerRole VARCHAR(50),
+  playerTeamId INT,
+  PRIMARY KEY (playerId)
+);
+
+CREATE TABLE matches(
+  matchesId INT NOT NULL AUTO_INCREMENT,
+  matchesResult VARCHAR(50),
+
+  PRIMARY KEY (matchesId)
+);
+
+CREATE TABLE teamCountryId(
+  teamCountryId INT NOT NULL AUTO_INCREMENT,
+  teamCountryTid INT,
+  teamCountryCid INT,
+  PRIMARY KEY (teamCountryId),
+  FOREIGN KEY (teamCountryTid) REFERENCES team(teamId),
+  FOREIGN KEY (teamCountryCid) REFERENCES country(countryId)
+);
+
+CREATE TABLE playerCountryId(
+  playerCountryId INT NOT NULL AUTO_INCREMENT,
+  playerCountryPid INT,
+  playerCountryCid INT,
+  PRIMARY KEY (playerCountryId),
+  FOREIGN KEY (playerCountryPid) REFERENCES player(playerId),
+  FOREIGN KEY (playerCountryCid) REFERENCES country(countryId)
+);
+
+CREATE TABLE playerTeamId(
+  playerTeamId INT NOT NULL AUTO_INCREMENT,
+  playerTeamTid INT,
+  playerTeamPid INT,
+  PRIMARY KEY (playerTeamId),
+  FOREIGN KEY (playerTeamTid) REFERENCES team(teamId),
+  FOREIGN KEY (playerTeamPid) REFERENCES player(playerId)
+);
+
+CREATE TABLE matchTeamId(
+  matchTeamId INT NOT NULL AUTO_INCREMENT,
+  matchTeamMid INT,
+  matchTeamTid INT,
+  PRIMARY KEY (matchTeamId),
+  FOREIGN KEY (matchTeamMid) REFERENCES matches(matchesId),
+  FOREIGN KEY (matchTeamTid) REFERENCES team(teamId)
+);
+
+
+-- Lägger till spelarna och deras roller.
+INSERT INTO player(playerId, playerName, playerRole)
+VALUES
+(1, 'RAMZES', 'Carry'),
+(2, 'NoOne', 'Midlane'),
+(3, 'pasha', 'Offlane'),
+(4, 'RodjER', 'Support'),
+(5, 'Solo',	'Support'),
+(6, 'MATUMBAMAN', 'Midlane'),
+(7, 'Miracle', 'Carry'),
+(8, 'MindControl', 'Offlane'),
+(9, 'GH', 'Support'),
+(10,'KuroKy', 'Support'),
+(11,'Ame',	'Carry'),
+(12,'Maybe', 'Midlane'),
+(13,'Chalice', 'Offlane'),
+(14,'fy', 'Support'),
+(15,'xNova', 'Support'),
+(16,'Ace',	'Carry'),
+(17,'MidOne', 'Midlane'),
+(18,'Fata',	'Offlane'),
+(19,'YapzOr', 'Support'),
+(20,'Puppey', 'Support'),
+(21,'Mushi', 'Midlane'),
+(22,'Moon', 'Carry'),
+(23,'iceiceice',	'Offlane'),
+(24,'Jabz',	'Support'),
+(25,'ninjaboogie', 'Support'),
+(26,'Paparazi',	'Carry'),
+(27,'Ori', 'Midlane'),
+(28,'eLeVeN', 'Offlane'),
+(29,'LaNm', 'Support'),
+(30,'Fenrir', 'Support'),
+(31,'Moogy', 'Carry'),
+(32,'Sccc', 'Midlane'),
+(33,'kpii', 'Offlane'),
+(34,'Kaka', 'Support'),
+(35,'Faith', 'Support'),
+(36,'Sylar', 'Carry'),
+(37,'Freeze', 'Midlane'),
+(38,'Yang', 'Offlane'),
+(39,'Fade', 'Support'),
+(40,'ddc', 'Support'),
+(41,'ana', 'Carry'),
+(42,'Topson', 'Midlane'),
+(43,'FckingMad', 'Offlane'),
+(44,'JerAx', 'Support'),
+(45,'notail', 'Support'),
+(46,'Silent', 'Carry'),
+(47,'Iceberg', 'Midlane'),
+(48,'nongrata', 'Offlane'),
+(49,'Nofear', 'Support'),
+(50,'ALWAYSWANNAFLY', 'Support'),
+(51,'zhizhizhi', 'Carry'),
+(52,'Zyd', 'Midlane'),
+(53,'XinQ', 'Offlane'),
+(54,'Pyw', 'Support'),
+(55,'XCJ', 'Support'),
+(56,'Agressif', 'Carry'),
+(57,'XXs', 'Midlane'),
+(58,'Srf', 'Offlane'),
+(59,'BoBoKa', 'Support'),
+(60,'Q', 'Support'),
+(61,'EternaLEnVy', 'Carry'),
+(62,'Abed', 'Midlane'),
+(63,'UNiVeRsE', 'Offlane'),
+(64,'DJ', 'Support'),
+(65,'pieliedie', 'Support'),
+(66,'Raven', 'Carry'),
+(67,'Armel', 'Midlane'),
+(68,'Sam_H', 'Offlane'),
+(69,'Tims', 'Support'),
+(70,'Kuku', 'Support'),
+(71,'Resolution', 'Carry'),
+(72,'YawaR', 'Midlane'),
+(73,'Sneyking', 'Offlane'),
+(74,'MSS', 'Support'),
+(75,'SVG', 'Support'),
+(76,'Arteezy', 'Carry'),
+(77,'SumaiL', 'Midlane'),
+(78,'S4', 'Offlane'),
+(79,'Cr1t', 'Support'),
+(80,'Fly', 'Support'),
+(81,'Pajkatt', 'Carry'),
+(82,'CCnC', 'Midlane'),
+(83,'33', 'Offlane'),
+(84,'zai', 'Support'),
+(85,'PPD', 'Support'),
+(86,'hFn', 'Carry'),
+(87,'w33', 'Midlane'),
+(88,'tavo', 'Offlane'),
+(89,'Kingrd', 'Support'),
+(90,'Duster', 'Support');
+
+— Lägger till länderna för spelare och lagen.
+INSERT INTO country(countryId, countryName)
+VALUES
+(1, 'China'),
+(2, 'Philippines'),
+(3, 'Russia'),
+(4, 'United States'),
+(5, 'Malaysia'),
+(6, 'Brazil'),
+(7, 'Sweden'),
+(8, 'Ukraine'),
+(9, 'Denmark'),
+(10, 'Finland'),
+(11, 'Germany'),
+(12, 'Jordan'),
+(13, 'Pakistan'),
+(14, 'Australia'),
+(15, 'Canada'),
+(16, 'Israel'),
+(17, 'Bulgaria'),
+(18, 'Estonia'),
+(19, 'France'),
+(20, 'Macau'),
+(21, 'Lebanon'),
+(22, 'Romania'),
+(23, 'Singapore'),
+(24, 'Thailand');
+
+—Lägger till data till lagen med namn, pricemonee och slutresultat i turneringen.
+INSERT INTO team(teamId, teamName, teamPlacement, teamMoneyWon)
+VALUES
+(1, 'OG', '1st', '$11,234,158'),
+(2, 'PSG.LGD', '2nd', '$4,085,148'),
+(3, 'Evil Geniuses', '3rd', '$2,580,879'),
+(4, 'Team Liquid', '4th', '$1,787,252'),
+(5, 'Virtus.Pro', '5th', '$1,148,948'),
+(6, 'Team Secret', '6th', '$1,148,948'),
+(7, 'OpTic Gaming', '7th', '$638,304'),
+(8, 'VGJ.Storm', '8th', '$638,304'),
+(9, 'Team Serenity', '9th', '$382,983'),
+(10, 'Mineski', '10th', '$382,983'),
+(11, 'Winstrike Team', '11th', '$382,983'),
+(12, 'Vici Gaming', '12th', '$382,983'),
+(13, 'Fnatic', '13th', '$127,661'),
+(14, 'TNC Predator', '14th', '$127,661'),
+(15, 'Newbee', '15th', '$127,661'),
+(16, 'VGJ.Thunder', '16th', '$3127,661'),
+(17, 'Invictus Gaming', '17th', '$63,830'),
+(18, 'pain Gaming', '18th', '$63,830');
+
+— Mellan tabell för teams och country.
+INSERT INTO teamCountryId( TEAMCOUNTRYID, TEAMCOUNTRYTID, TEAMCOUNTRYCID)
+VALUES
+(1, 1, 25),
+(2, 2, 1),
+(3, 3, 4),
+(4, 4, 25),
+(5, 5, 3),
+(6, 6, 25),
+(7, 7, 4),
+(8, 8, 4),
+(9, 9, 1),
+(10, 10, 5),
+(11, 11, 3),
+(12, 12, 1),
+(13, 13, 4),
+(14, 14, 2),
+(15, 15, 1),
+(16, 16, 1),
+(17, 17, 1),
+(18, 18, 6);
+
+— Mellan tabell för player och teams.
+INSERT INTO playerTeamId(playerTeamId, playerTeamTid, playerTeamPid)
+VALUES
+(1, 5, 1),
+(2, 5, 2),
+(3, 5, 3),
+(4, 5, 4),
+(5, 5, 5),
+(6, 4, 6),
+(7, 4, 7),
+(8, 4, ??,
+(9, 4, 9),
+(10, 4, 10),
+(11, 2, 11),
+(12, 2, 12),
+(13, 2, 13),
+(14, 2, 14),
+(15, 2, 15),
+(16, 6, 16),
+(17, 6, 17),
+(18, 6, 18),
+(19, 6, 19),
+(20, 6, 20),
+(21, 10, 21),
+(22, 10, 22),
+(23, 10, 23),
+(24, 10, 24),
+(25, 10, 25),
+(26, 12, 26),
+(27, 12, 27),
+(28, 12, 28),
+(29, 12, 29),
+(30, 12, 30),
+(31, 15, 31),
+(32, 15, 32),
+(33, 15, 33),
+(34, 15, 34),
+(35, 15, 35),
+(36, 16, 36),
+(37, 16, 37),
+(38, 16, 38),
+(39, 16, 39),
+(40, 16, 40),
+(41, 1, 41),
+(42, 1, 42),
+(43, 1, 43),
+(44, 1, 44),
+(45, 1, 45),
+(46, 11, 46),
+(47, 11, 47),
+(48, 11, 48),
+(49, 11, 49),
+(50, 11, 50),
+(51, 9, 51),
+(52, 9, 52),
+(53, 9, 53),
+(54, 9, 54),
+(55, 9, 55),
+(56, 17, 56),
+(57, 17, 57),
+(58, 17, 58),
+(59, 17, 59),
+(60, 17, 60),
+(61, 13, 61),
+(62, 13, 62),
+(63, 13, 63),
+(64, 13, 64),
+(65, 13, 65),
+(66, 14, 66),
+(67, 14, 67),
+(68, 14, 68),
+(69, 14, 69),
+(70, 14, 70),
+(71, 8, 71),
+(72, 8, 72),
+(73, 8, 73),
+(74, 8, 74),
+(75, 8, 75),
+(76, 3, 76),
+(77, 3, 77),
+(78, 3, 78),
+(79, 3, 79),
+(80, 7, 80),
+(81, 7, 81),
+(82, 7, 82),
+(83, 7, 83),
+(84, 7, 84),
+(85, 7, 85),
+(86, 18, 86),
+(87, 18, 87),
+(88, 18, 88),
+(89, 18, 89),
+(90, 18, 90);
+
+— Mellan tabell för player och countrys
+INSERT INTO playerCountryId(playerCountryId, playerCountryPid, playerCountryCid)
+VALUES
+(1,  1, 3),
+(2,  2, 3),
+(3,  3, 3),
+(4,  4, ??,
+(5,  5, 3),
+(6,  6, 10),
+(7,  7, 12),
+(8,  8, 17),
+(9,  9, 21),
+(10, 10, 11),
+(11, 11, 1),
+(12, 12, 1),
+(13, 13, 1),
+(14, 14, 1),
+(15, 15, 5),
+(16, 16, 9),
+(17, 17, 5),
+(18, 18, 11),
+(19, 19, 12),
+(20, 20, 18),
+(21, 21, 5),
+(22, 22, 5),
+(23, 23, 23),
+(24, 24, 24),
+(25, 25, 2),
+(26, 26, 1),
+(27, 27, 1),
+(28, 28, 1),
+(29, 29, 1),
+(30, 30, 1),
+(31, 31, 1),
+(32, 32, 1),
+(33, 33, 14),
+(34, 34, 1),
+(35, 35, 1),
+(36, 36, 1),
+(37, 37, 1),
+(38, 38, 1),
+(39, 39, 1),
+(40, 40, 20),
+(41, 41, 14),
+(42, 42, 10),
+(43, 43, 19),
+(44, 44, 10),
+(45, 45, 9),
+(46, 46, 3),
+(47, 47, ??,
+(48, 48, 3),
+(49, 49, 3),
+(50, 50, ??,
+(51, 51, 1),
+(52, 52, 1),
+(53, 53, 1),
+(54, 54, 1),
+(55, 55, 1),
+(56, 56, 1),
+(57, 57, 1),
+(58, 58, 1),
+(59, 59, 1),
+(60, 60, 1),
+(61, 61, 15),
+(62, 62, 2),
+(63, 63, 4),
+(64, 64, 2),
+(65, 65, 7),
+(66, 66, 2),
+(67, 67, 2),
+(68, 68, 2),
+(69, 69, 2),
+(70, 70, 2),
+(71, 71, 13),
+(72, 72, ??,
+(73, 73, 4),
+(74, 74, 4),
+(75, 75, 4),
+(76, 76, 15),
+(77, 77, 13),
+(78, 78, 7),
+(79, 79, 9),
+(80, 80, 16),
+(81, 81, 7),
+(82, 82, 4),
+(83, 83, 16),
+(84, 84, 7),
+(85, 85, 4),
+(86, 86, 6),
+(87, 87, 22),
+(88, 88, 6),
+(89, 89, 6),
+(90, 90, 6);
+
+— Mellan tabell för matches och teams 
+INSERT INTO matchTeamId( MATCHTEAMID, MATCHTEAMMID, MATCHTEAMTID, matchTeamT2id)
+VALUES
+(1, 1, 4, 7), -- UB R1
+(2, 2, 5, 2), -- UB R1
+(3, 3, 8, 1), -- UB R1
+(4, 4, 3, 6), -- UB R1
+(5, 5, 4, 2), -- UB R2
+(6, 6, 1, 3), -- UB R2
+(7, 7, 2, 1), -- UB Finals
+(8, 8, 13, 9), -- LB R1
+(9, 9, 14, 10), -- LB R1
+(10, 10, 15, 11), -- LB R1
+(11, 11, 16, 12), -- LB R1
+(12, 12, 7, 9), -- LB R2
+(13, 13, 5, 10), -- LB R2
+(14, 14, 8, 11), -- LB R2
+(15, 15, 6, 12), -- LB R2
+(16, 16, 7, 5), -- LB R3
+(17, 17, 8, 6), -- LB R3
+(18, 18, 3, 5), -- LB R4
+(19,19, 4, 6), -- LB R4
+(20, 20, 3, 4), -- LB R5
+(21, 21, 2, 3), -- LB R6
+(22, 22, 1, 2); -- Grand Finals
+
+-- Ändrar Data type på matchesResult till VARCHAR.
+ALTER TABLE matches ADD matchesResult VARCHAR(50);
+
+-- Lägger till en kolumn i matchTeamId som heter matchTeamT2id och gör den till FK som referar till teamId.
+ALTER TABLE matchTeamId ADD matchTeamT2id INT,
+ADD CONSTRAINT FOREIGN KEY (matchTeamT2id) REFERENCES team(teamId);
+
+-- Visar lagen och vilket land de är ifrån.
+SELECT team.teamName, country.countryName
+FROM country
+INNER JOIN teamCountryId
+ON country.countryId = teamCountryId.teamCountryCid
+JOIN team
+ON teamCountryId.teamCountryTid = team.teamId;
+
+
+-- Visar alla lagen, placering, vinster, spelar namn, spelar roll och länder de är ifrån.
+SELECT team.teamName, team.teamPlacement, team.teamMoneyWon, player.playerName, player.playerRole, country.countryName
+FROM player
+INNER JOIN playerTeamId
+ON player.playerId = playerTeamId.playerTeamPid
+JOIN team
+ON playerTeamId.playerTeamTid = team.teamId
+JOIN playerCountryId
+ON player.playerId = playerCountryId.playerCountryPid
+JOIN country
+ON playerCountryId.playerCountryCid = country.countryId
+ORDER BY teamId;
+
+
+-- Tar bort kolumn playerTeamId i player
+ALTER TABLE player DROP COLUMN playerTeamId;
+
+-- Uppdaterar
+UPDATE team
+SET teamMoneyWon = '$127,661'
+WHERE teamId = 16;
+
+UPDATE player
+SET playerName = 'Duster'
+WHERE playerId = 90;
+
+https://www.draw.io/?lightbox=1&highlight=0000ff&edit=_blank&layers=1&nav=1&title=Untitled%20Diagram.xml&fbclid=IwAR1GHAqLGepQ-UGWoE-QuS6CXHgxTMvk9zaC3IDMWwfMfJLCtv3gT_lJPcQ#R3Zptb6JAEMc%2FjS%2BvYXd58iWl9Gp6VIM2Te8dJ1shBdYgnnqf%2FhYBFWbttcnJEl9oYHj%2B7ezMfwYGxE623zN%2FGbosoPEAK8F2QO4GGA81hf8Xhl1p0JFZGhZZFJQmdDRMoz%2B0MlbHLdZRQFeNHXPG4jxaNo1zlqZ0njdsfpaxTXO3NxY3r7r0FxQYpnM%2FhtaXKMjD0mpi42h%2FoNEirK%2BM9GG5JfHrnasnWYV%2BwDYnJuIMiJ0xlpdLydamccGu5lIed39m6%2BHGMprmnzkgGCfWyE03Rmr%2FNB5n4%2BdH9%2F1bdZbffryuHnjmWO60uuN8V2PI2DoNaHEmZUBuN2GU0%2BnSnxdbN3zcuS3Mk5ivIb5YnZNmOd2evVl0QMBdh7KE5tmO71IdQOrxr9wG6%2FhGKy2b4zAgUu0VngyBXtn8auQXh5Mf4fCFis8XWBHAavLDenU8%2BbR0rLVoCVjhLlmpgNX9YzF1qZ%2FYHA6%2FxCgA2Ph5%2BbSmnSDD2LhpQiMaErjYUIPUNO1C1DRArQD25CdUKqv2ZETEkE1Kh3Ox9i%2FJjgUil6LIRWWIUS1jf0czybB0rWewTHHcKmH1I3JpuB23JDMbAmYlLulxq%2B1dPYhbdXA4gfVgCQREyJJf61UnlFSzJR4M6E%2BmQDtcjhEUpQgQ4s%2BbN1Gs8oy9U5vFLOOWlKWFk71Fcdwy%2BXG0SPnqnPOh3H5b0Iu44reqDUkUBPE5D21Ku%2F%2BBn7SVLsSvCvDjS0k3BHWue734tbb3C6Rzt%2FihdHatmf3gSCwzPiorOi3BEFTIZa7xWNyvXKPLTzVnhF%2Fi5%2FNQloapNYsqWbMgKPT2XDy6Wse5VDaqIt91oKSbWN5sZI8m1sy5g4GoQ7mCzHa%2BND%2BLy7wQLgxF3RVnzIM%2B%2FLA112nOxFAxXvEAIKAY5Q8AFC32%2BPlp5r3CWCG5k6wSAll120eG4WKfmOe9aC%2B0y0FNfjoisCLxnInnTJ2nmdRcRARN5E8Km0vlIiLovHtjGA27xKSrSs8giRvtk5hDSIqHkjkB2wHLkD37YK%2B9gOXy3Lh7YWmvWCFRJuyWFqy6rrh5ZbSTKxIk1y6FCIF13RUrQUNpZR%2Bsy1aCBJaOVzwA7fhDsGT8KtSWVxx%2BgLaXHX5UWIievD%2BcyX87rba7J7JfuKpYTGzfjSuAuTLblfUBhvZPagh1ig2WRE1sxQ9HsrG11dlQ9BGXCJxOLgUO1kdV3S39dTWovAUvYrudm7BMgk6GeuZkgtoSYQE18%2Bs5gK8eP9fcbzv55pU4fwE%3D
